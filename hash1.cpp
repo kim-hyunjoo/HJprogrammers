@@ -34,5 +34,5 @@ int main() {
     cout<<solution(participant1, completion1)<<endl;
     cout<<solution(participant2, completion2)<<endl;
     cout<<solution(participant3, completion3)<<endl;
-    cout<<"git 연동 테스트"<<endl;
+    cout<<"git test"<<endl;
 }
