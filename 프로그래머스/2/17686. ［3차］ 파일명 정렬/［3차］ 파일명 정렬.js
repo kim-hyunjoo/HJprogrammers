@@ -6,6 +6,7 @@ function solution(files) {
         //HEAD는 문자. 한글자 이상
         //1-5글자의 숫자
         //나머지는 TAIL
+        
         const splits = ['','',''];
         [...fileName].forEach(char => {
             isNumber = isNaN(parseInt(char)) === false // 문자일 경우 isNaN true, 숫자면 false
@@ -21,7 +22,9 @@ function solution(files) {
                 
             
         })
+        
         /*
+        
         const index1 = [...fileName].findIndex(str=> isNaN(parseInt(str)) === false);
         const HEAD = index1 > 0 ? fileName.slice(0, index1) : ''
 
@@ -29,9 +32,11 @@ function solution(files) {
         const NUMBER = index2 > 0 ? fileName.slice(index1, index1+index2) : ''
         
         const TAIL = index2 > 0 ? fileName.slice(index1+index2) : fileName.slice(index1)
-        */
-        console.log(splits)
+       */
+        
+        //console.log([HEAD, NUMBER, TAIL])
         splitFiles.push(splits) 
+        //splitFiles.push([HEAD, NUMBER, TAIL])
     })
     
     const compare = (a,b) => {
