@@ -9,8 +9,6 @@ function solution(n, results) {
         graph[loser][winner] = -1; //lose
     })
     
-    console.log(graph)
-    
     for(let i=1;i<=n;i++) { // 거쳐가는 선수
         for(let j=1;j<=n;j++) {
             for(let k=1;k<=n;k++) {
@@ -28,7 +26,6 @@ function solution(n, results) {
         }
     }
     
-    console.log(graph)
     for(let r=1;r<=n;r++){
         let check = 0;
         for(let c=1;c<=n;c++){
