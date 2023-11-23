@@ -102,7 +102,6 @@ function main() {
         //먹이 후보 중 가장 우선 순위가 높은 것(왼쪽 위) 찾기
         const [feedR, feedC, distance] = feedSelector(feedQueue);
 
-        map[startR][startC] = 0; // 상어가 기존 첫 위치를 벗어나니 0처리
         feedCount++; // 먹이를 먹었다
         map[feedR][feedC] = 0; // 먹이를 먹고난 다음 아기상어의 위치
 
