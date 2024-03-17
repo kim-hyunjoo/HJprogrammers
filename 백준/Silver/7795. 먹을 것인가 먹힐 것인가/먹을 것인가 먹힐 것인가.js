@@ -18,10 +18,13 @@ function main() {
     const [N, M] = map[t * 3];
     const A = map[t * 3 + 1];
     const B = map[t * 3 + 2];
+    A.sort((a, b) => b - a);
+    B.sort((a, b) => b - a);
     for (let n = 0; n < N; n++) {
       for (let m = 0; m < M; m++) {
         if (A[n] > B[m]) {
-          count++;
+          count += M - m;
+          break;
         }
       }
     }
