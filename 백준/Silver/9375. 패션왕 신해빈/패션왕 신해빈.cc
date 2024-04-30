@@ -20,20 +20,14 @@ int main() {
         for(int i=0;i<n;i++) {
             string name, type;
             cin >> name >> type;
-            if(map.count(type)) {
-                int prev = map[type];
-                map.erase(type);
-                map.insert(make_pair(type, prev+1));
-            }
-            else {
-                map.insert(make_pair(type, 2));
-            }
+            
+            map[type]++;
         } 
 
         int answer = 1;
 
         for(auto el : map){
-            answer *= el.second;
+            answer *= (el.second+1);
         }
 
         
