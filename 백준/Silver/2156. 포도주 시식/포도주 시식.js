@@ -1,55 +1,29 @@
-/*
 const fs = require("fs");
-const filePath = "./input.txt";
-const input = fs.readFileSync(filePath).toString().trim().split('\n');
-*/
+const filePath = process.platform === "linux" ? "/dev/stdin" : "./input.txt";
+const input = fs.readFileSync(filePath).toString().trim().split("\n");
 
-const input = require('fs').readFileSync('dev/stdin').toString().trim().split('\n');
-
-
+const [N] = input[0].split(" ").map(Number);
 //const [N, M] = input[0].split(" ").map(Number);
-
-const N = Number(input[0]);
+//const [M] = input[2].split(" ").map(Number);
 const arr = input.slice(1).map(Number);
-//const map = input.slice(1).map(_ => _.trim().split(''));
-
+//const arr = input[1].split(" ").map(Number);
+//const map = input.slice(1).map((_) => _.trim().split(" ").map(Number));
+//const [start, end] = input[M + 2].split(" ").map(Number);
 
 function main() {
-    // 1. 포도주 잔을 선택하면 그 잔에 들어있는 포도주는 모두 마셔야 하고, 마신 후에는 원래 위치에 다시 놓아야 한다.
-    // 2. 연속으로 놓여 있는 3잔을 모두 마실 수는 없다.
+  const dp = Array.from({ length: N + 1 }, () => 0);
 
-    // 6 10 13 9 8 1
-    // 6 10 9 8 -> 33
+  dp[1] = arr[0];
+  dp[2] = arr[0] + arr[1];
 
-    //연속 3개를 마실 수는 없으니까 계속해서 체크를 해줘야함.. 만약 예전꺼+또예전꺼 마셨다면 ㄴㄴ...
-
-    /**
-     * dp[0] = 6
-     * dp[1] = dp[0] + 10
-     * dp[2] = dp[0] + dp[1]
-     * dp[3] = dp[2] , dp[1]+arr[3], dp[0]+arr[2]+arr[3];
-     * dp[4] = dp[2]
-     */
-
-    const dp = new Array(N+1).fill(0);
-
-    arr.unshift(0);
-
-    dp[0] = 0;
-    dp[1] = dp[0]+arr[1];
-    dp[2] = dp[1]+arr[2];
-    dp[3] = Math.max(dp[2], dp[1]+arr[3], dp[0]+arr[2]+arr[3]);
-    
-    for(let i=4;i<N+1;i++) {
-        dp[i] = Math.max(
-            dp[i-2]+arr[i], 
-            dp[i-3]+arr[i-1]+arr[i], 
-            dp[i-4] + arr[i-2] + arr[i-1] //d[i-1] o x o o x 
-            );
-    }
-
-    //dp.sort((a,b) => b-a);
-    console.log(dp[N]);
+  for (let i = 3; i <= N; i++) {
+    dp[i] = Math.max(
+      dp[i - 1],
+      dp[i - 3] + arr[i - 2] + arr[i - 1],
+      dp[i - 2] + arr[i - 1]
+    );
+  }
+  console.log(dp[N]);
 }
 
 main();
