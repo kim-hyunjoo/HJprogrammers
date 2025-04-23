@@ -12,6 +12,7 @@ int main() {
 
   vector<vector<int> > graph(N + 1);
 
+  // 그래프 그리기
   for (int i = 0; i < M; i++) {
     int start, end;
     cin >> start >> end;
@@ -21,44 +22,52 @@ int main() {
 
   // 정렬
   for (int i = 1; i <= N; i++) {
-    sort(graph[i].begin(), graph[i].end(), greater<int>());
+    sort(graph[i].begin(), graph[i].end());
   }
 
   bool isVisited[N + 1];
   fill_n(&isVisited[0], N + 1, false);
 
-  // DFS
+  /* DFS */
+
   stack<int> s;
+  // 탐색 시작 지점
   s.push(V);
+  isVisited[V] = true;
+  cout << V << ' ';
 
   while (!s.empty()) {
     int curV = s.top();
-    s.pop();
-    if (isVisited[curV]) {
-      continue;
-    }
-    cout << curV << ' ';
-    isVisited[curV] = true;
+    bool exist_child = false;
 
+    // 현재 정점에서 탐색 가능한 자식 노드 1개 찾기
     for (int i = 0; i < graph[curV].size(); i++) {
       int nextV = graph[curV][i];
       if (!isVisited[nextV]) {
+        cout << nextV << ' ';
         s.push(nextV);
+        isVisited[nextV] = true;
+        // 찾으면 중단하고 바로 그 노드에서 새로 탐색
+        exist_child = true;
+        break;
       }
+    }
+
+    // 더이상 자식 노드가 없다면 스택에서 제거
+    if (!exist_child) {
+      s.pop();
     }
   }
 
   cout << '\n';
 
-  // 다시 초기화
+  // 방문여부 배열 초기화
   fill_n(&isVisited[0], N + 1, false);
 
-  for (int i = 1; i <= N; i++) {
-    sort(graph[i].begin(), graph[i].end());
-  }
+  /* BFS */
 
-  // BFS
   queue<int> q;
+  // 탐색 시작 지점
   q.push(V);
   isVisited[V] = true;
 
@@ -69,7 +78,7 @@ int main() {
 
     for (int i = 0; i < graph[curV].size(); i++) {
       int nextV = graph[curV][i];
-
+      // 방문하지 않은 인접 노드를 전부 큐에 삽입
       if (!isVisited[nextV]) {
         isVisited[nextV] = true;
         q.push(nextV);
