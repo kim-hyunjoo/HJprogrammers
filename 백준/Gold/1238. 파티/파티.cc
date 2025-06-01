@@ -19,6 +19,8 @@ void dijkstra(int v) {
     int curW = pq.top().second;
     pq.pop();
 
+    if (dist[v][start] < curW) continue;
+
     for (int i = 0; i < graph[start].size(); i++) {
       int end = graph[start][i].first;
       int nextW = graph[start][i].second;
