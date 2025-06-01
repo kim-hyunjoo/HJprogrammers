@@ -16,7 +16,6 @@ void dijkstra(vector<vector<pair<int, int> > > &graph, int start, int end,
   unordered_map<int, int> mp;  // k: 현재노드 v: 직전 노드
 
   pq.push(make_pair(start, 0));
-  dist[start] = 0;
 
   while (!pq.empty()) {
     int curV = pq.top().first;
