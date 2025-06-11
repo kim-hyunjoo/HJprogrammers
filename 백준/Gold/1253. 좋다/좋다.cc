@@ -22,27 +22,23 @@ int main() {
   for (int i = 0; i < N; i++) {
     int left = 0;
     int right = N - 1;
-    if (left == i) {
-      left++;
-    }
-    if (right == i) {
-      right--;
-    }
 
     while (left < right) {
+      if (left == i) {
+        left++;
+        continue;
+      }
+      if (right == i) {
+        right--;
+        continue;
+      }
       if (arr[left] + arr[right] == arr[i]) {
         answer++;
         break;
       } else if (arr[left] + arr[right] > arr[i]) {
         right--;
-        if (right == i) {
-          right--;
-        }
       } else {
         left++;
-        if (left == i) {
-          left++;
-        }
       }
     }
   }
