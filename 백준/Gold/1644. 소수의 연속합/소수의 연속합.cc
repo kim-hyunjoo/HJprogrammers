@@ -33,11 +33,12 @@ int main() {
   int sum = arr[0];
   int answer = 0;
 
-  while (right < arr.size()) {
+  while (left <= right) {
     if (sum == N) {
       answer++;
-      sum += arr[++right];
-    } else if (sum < N) {
+    }
+    if (sum < N) {
+      if (right == arr.size() - 1) break;
       sum += arr[++right];
     } else {
       sum -= arr[left++];
