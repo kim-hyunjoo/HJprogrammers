@@ -1,14 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-bool isPrimeNumber(int num) {
-  for (int i = 2; i <= sqrt(num); i++) {
-    if (num % i == 0) {
-      return false;
-    }
-  }
-  return true;
-}
 int main() {
   ios_base::sync_with_stdio(0);
   cin.tie(0);
@@ -21,10 +13,20 @@ int main() {
     return 0;
   }
 
-  vector<int> arr;
+  vector<int> isPrime(N + 1, true);
 
+  // 에라토스테네스의 체
+  for (int i = 2; i * i <= N; i++) {
+    if (isPrime[i]) {
+      for (int j = i * i; j <= N; j += i) {
+        isPrime[j] = false;
+      }
+    }
+  }
+
+  vector<int> arr;
   for (int i = 2; i <= N; i++) {
-    if (isPrimeNumber(i)) {
+    if (isPrime[i]) {
       arr.push_back(i);
     }
   }
