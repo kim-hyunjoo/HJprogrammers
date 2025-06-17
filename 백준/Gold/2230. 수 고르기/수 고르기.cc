@@ -9,9 +9,9 @@ int main() {
   int N, M;
   cin >> N >> M;
 
-  vector<long long> arr;
+  vector<int> arr;
   for (int i = 0; i < N; i++) {
-    long long num;
+    int num;
     cin >> num;
     arr.push_back(num);
   }
@@ -20,8 +20,8 @@ int main() {
 
   int left = 0;
   int right = 0;
-  long long gap;
-  long long min_gap = LLONG_MAX;
+  int gap;
+  int min_gap = INT_MAX;
   while (right < N) {
     gap = arr[right] - arr[left];
     if (gap >= M && gap < min_gap) {
