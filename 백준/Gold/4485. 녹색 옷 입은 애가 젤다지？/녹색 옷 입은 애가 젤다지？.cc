@@ -5,8 +5,8 @@ int dr[4] = {1, 0, -1, 0};
 int dc[4] = {0, 1, 0, -1};
 
 struct cmp {
-  bool operator()(pair<int, int> a, pair<int, int> b) {
-    return a.second < b.second;
+  bool operator()(tuple<int, int, int> a, tuple<int, int, int> b) {
+    return get<2>(a) > get<2>(b);
   }
 };
 
@@ -28,16 +28,18 @@ int main() {
       }
     }
 
-    priority_queue<pair<int, int>, vector<pair<int, int> >, cmp> pq;
+    priority_queue<tuple<int, int, int>, vector<tuple<int, int, int> >, cmp> pq;
     vector<vector<int> > dist(N, vector<int>(N, INT_MAX));
 
-    pq.push(make_pair(0, 0));
+    pq.push(make_tuple(0, 0, mp[0][0]));
     dist[0][0] = mp[0][0];
 
     while (!pq.empty()) {
-      int curR = pq.top().first;
-      int curC = pq.top().second;
+      int curR, curC, curW;
+      tie(curR, curC, curW) = pq.top();
       pq.pop();
+
+      if (curW > dist[curR][curC]) continue;
 
       for (int i = 0; i < 4; i++) {
         int nextR = curR + dr[i];
@@ -45,15 +47,14 @@ int main() {
 
         if (nextR < 0 || nextC < 0 || nextR >= N || nextC >= N) continue;
 
-        if (dist[curR][curC] + mp[nextR][nextC] < dist[nextR][nextC]) {
-          dist[nextR][nextC] = dist[curR][curC] + mp[nextR][nextC];
-          pq.push(make_pair(nextR, nextC));
+        if (curW + mp[nextR][nextC] < dist[nextR][nextC]) {
+          dist[nextR][nextC] = curW + mp[nextR][nextC];
+          pq.push(make_tuple(nextR, nextC, curW + mp[nextR][nextC]));
         }
       }
     }
 
-    cout << "Problem " << test_case << ": " << dist[N - 1][N - 1] << '\n';
-    test_case++;
+    cout << "Problem " << test_case++ << ": " << dist[N - 1][N - 1] << '\n';
   }
   return 0;
 }
