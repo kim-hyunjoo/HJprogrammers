@@ -7,18 +7,6 @@ bool isVisited[100][100];
 int dr[4] = {1, 0, -1, 0};
 int dc[4] = {0, 1, 0, -1};
 
-pair<int, int> findStart(int h) {
-  for (int r = 0; r < N; r++) {
-    for (int c = 0; c < N; c++) {
-      if (isVisited[r][c] == false && mp[r][c] > h) {
-        return {r, c};
-      }
-    }
-  }
-
-  return {-1, -1};
-}
-
 void dfs(int h, int curR, int curC) {
   isVisited[curR][curC] = true;
   for (int i = 0; i < 4; i++) {
@@ -51,15 +39,18 @@ int main() {
 
   int answer = 0;
 
-  for (int i = 0; i <= maxH; i++) {
+  for (int h = 0; h <= maxH; h++) {
     fill_n(&isVisited[0][0], 100 * 100, false);
 
     int count = 0;
-    while (true) {
-      auto [startR, startC] = findStart(i);
-      if (startR == -1) break;
-      dfs(i, startR, startC);
-      count++;
+
+    for (int r = 0; r < N; r++) {
+      for (int c = 0; c < N; c++) {
+        if (isVisited[r][c] == false && mp[r][c] > h) {
+          dfs(h, r, c);
+          count++;
+        }
+      }
     }
 
     answer = max(answer, count);
