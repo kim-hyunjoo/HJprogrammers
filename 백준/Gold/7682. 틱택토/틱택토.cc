@@ -22,6 +22,7 @@ int main() {
       if (input[i] == 'O') o_count++;
     }
 
+    // 만약 x와 o의 개수가 1개 차이거나 같지 않다면 invalid
     if (!(x_count == o_count || x_count == o_count + 1)) {
       isValid = false;
     }
@@ -29,30 +30,33 @@ int main() {
     bool isSuccess_x = false;
     bool isSuccess_o = false;
 
+    // 가로 세로 중 완성된게 있는지 체크
     for (int r = 0; r < 3; r++) {
-      string str1 = "", str2 = "";
-      str1 = string() + input[r * 3] + input[r * 3 + 1] + input[r * 3 + 2];
-      str2 = string() + input[r] + input[r + 3] + input[r + 6];
+      string row, col;
+      row = string() + input[r * 3] + input[r * 3 + 1] + input[r * 3 + 2];
+      col = string() + input[r] + input[r + 3] + input[r + 6];
 
-      if (str1 == "XXX" || str2 == "XXX") isSuccess_x = true;
-      if (str1 == "OOO" || str2 == "OOO") isSuccess_o = true;
+      if (row == "XXX" || col == "XXX") isSuccess_x = true;
+      if (row == "OOO" || col == "OOO") isSuccess_o = true;
     }
 
-    string str3 = "";
-    // cout << input[0] << input[4] << input[8] << endl;
-    str3 = string() + input[0] + input[4] + input[8];
-    // cout << str3 << endl;
-    if (str3 == "XXX") isSuccess_x = true;
-    if (str3 == "OOO") isSuccess_o = true;
-    str3 == "";
-    str3 = string() + input[2] + input[4] + input[6];
-    if (str3 == "XXX") isSuccess_x = true;
-    if (str3 == "OOO") isSuccess_o = true;
+    // 대각선 중 완성된게 있는지 체크
+    string cross;
+    cross = string() + input[0] + input[4] + input[8];
 
+    if (cross == "XXX") isSuccess_x = true;
+    if (cross == "OOO") isSuccess_o = true;
+
+    cross = string() + input[2] + input[4] + input[6];
+    if (cross == "XXX") isSuccess_x = true;
+    if (cross == "OOO") isSuccess_o = true;
+
+    // o가 성공했는데 x개수가 더 많으면 invalid
     if (isSuccess_o && x_count > o_count) isValid = false;
+    // x가 성공했는데 x개수가 o보다 1개 더 많지 않다면 invalid
     if (isSuccess_x && x_count != o_count + 1) isValid = false;
 
-    // cout << isSuccess_o << isSuccess_x << endl;
+    // 만약 둘다 성공하지 않았는데 빈칸이 존재한다면 invalid
     if (!isSuccess_o && !isSuccess_x) {
       for (int i = 0; i < 9; i++) {
         if (input[i] == '.') {
@@ -63,44 +67,6 @@ int main() {
 
     cout << (isValid ? "valid" : "invalid") << '\n';
   }
-  /*
-// invalid: x가 너무 많음 무조건 x는 o랑 같거나 1개 더 많음
- xxx
- oo
- xxx
-// valid
- xox
- oxo
- xox
-// invalid: o가 더 많음
- oxo
- xox
- oxo
-//valid : 무승부
- xxo
- oox
- xox
-//valid: x가 완성됨
- xo
- ox
-   x
-// invalid: o가 완성됐는데 x를 어케 더둠?
-  xx
- x x
- ooo
-// invalid: 아직 게임 더 진행 가능함
- x o
- o
- x
-// invalid: x가 더 적음
- oox
- xxo
- oxo
 
- O.X.XOX..
- o x
-  xo
- x
-  */
   return 0;
 }
